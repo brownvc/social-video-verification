@@ -54,7 +54,7 @@ The functions ```cpca```, ```screeplot```, ```mahalanobis```, ```kernelEVD```, `
 
 ## To-do
 - [x] populate readme
-- [] populate repo with code used for experiments 
-- [] streamline dataset processing scripts and add to repo
-- [] set up dataset download
+- [ ] populate repo with code used for experiments 
+- [ ] streamline dataset processing scripts and add to repo
+- [ ] set up dataset download
 
