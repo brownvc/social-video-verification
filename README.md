@@ -49,12 +49,5 @@ The functions ```cpca```, ```screeplot```, ```mahalanobis```, ```kernelEVD```, `
   publisher={Wiley Online Library}
 }
 ```
-## Running the code
-
-
-## To-do
-- [x] populate readme
-- [ ] populate repo with code used for experiments 
-- [ ] streamline dataset processing scripts and add to repo
-- [ ] set up dataset download
+Code and data coming soon!
 
