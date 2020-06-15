@@ -1,7 +1,7 @@
 # Towards Untrusted Social Video Verification to Combat Deepfakes via Face Geometry Consistency
 
 [Eleanor Tursman](https://tursmanor.github.io/),
-Marilyn George,
+[Marilyn George](https://cs.brown.edu/people/grad/mgeorge5/),
 [Seny Kamara](http://cs.brown.edu/~seny/),
 [James Tompkin](http://jamestompkin.com/)  
 Brown University  
