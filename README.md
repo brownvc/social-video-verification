@@ -49,5 +49,75 @@ The functions ```cpca```, ```screeplot```, ```mahalanobis```, ```kernelEVD```, `
   publisher={Wiley Online Library}
 }
 ```
-Code and data coming soon!
+
+### Running the Code
+#### Data Pre-Processing
+This section will explain how to process your own data with our scripts. If you'd like to use our data, which includes the raw video and the post-processed landmark matrices, please see [Downloading our Dataset](#downloading-our-dataset).  
+
+##### Requirements
+- You will need to download the dlib face detector and put it in `./Data-Processing/` before running the bash script. You can download it [here](http://dlib.net/files/mmod_human_face_detector.dat.bz2). 
+- You will also need to install [FAN](https://github.com/1adrianb/face-alignment), by running `pip install face-alignment`. 
+- You will need to install the requirements for [LipGAN](https://github.com/Rudrabha/LipGAN). Since it is under an MIT License, I have included the code in this repo, minus their models, which you will need to download yourself and place in `./LipGAN/logs/`. I made modifications to their `batch_inference.py` script so that it would use our pre-computed bounding boxes, and to add a little blending to the final result to make it look a bit nicer.     
+
+##### Using your own computed landmarks
+If you are using your own data, the format the experiment code expects is a struct with entries `cam1`,`cam2`,`cam3`,`cam4`,`cam5`,`cam6`, and `fake`, where the fake is a manipulated version of one of the real cameras. Each field contains an `f x 40` matrix, where there are `f` frames, and each row contains mouth landmarks `[x_1, y_1, x_2, y_2, ..., x_20,  y_20]` (though you may use any subset of landmarks you like--- the 20 mouth landmarks are what we used for all our experiments). Each `f x 40` matrix should be normalized by subtracting the mean and dividing by the standard deviation. We generate our .mat files using `./Data-Processing/landmark-npy-to-mat.py`. Here is an example of how to run that script to generate one of the mat files:  
+`python3 landmark-npy-to-mat.py 4 ID6 /path/to/dataset/`  
+where the fake camera is camera four, and we're looking at person six from the dataset.   
+
+##### Using our video processing pipe   
+The process for pre-processing the data is outlined in `data-pipeline.bash`. To run it:  
+`bash -i data-pipeline <path-to-video-folder> <path-to-this-script-folder> <audio filename for lipgan>`. 
+
+The bash script's steps are as follows:  
+1. Convert the video to frames using ffmpeg.
+2. Get bounding box coordinates for the face in each frame using dlib. Save the results to a txt file. If you want to save the cropped images proper, swap in `saveCrop = True` on line 62 of `cnn_face_detector.py`. Dlib needs to be enabled with CUDA support for this to run reasonably fast. 
+3. Run 2D landmark detection using [FAN](https://github.com/1adrianb/face-alignment) given the saved bounding boxes, and save npy files with 68 landmarks per frame. 
+4. Create a visualization of the landmarks on top of every camera view, to verify everything has worked properly. 
+5. Run LipGAN to create a fake for each input camera, using the audio you specify. The audio must be pre-processed as directed in LipGAN using their matlab scripts before this step, and placed in `./LipGAN/audio/`. (It isn't automated in the bash script.) The bash script expects that you've made a conda environment called 'lipgan' for running lipgan. 
+6. Processes the lipgan fakes as in steps 1-3. 
+
+#### Experiments
+Before running experimental code, you will have to go into the Matlab function ```clusterdata.m```, and change line one from ```function [T] = clusterdata(X, varargin)``` to ```function [T,Z] = clusterdata(X, varargin)```. Z is the actual tree which we will cluster ourselves.  
+
+- [Full Sequence Fake Detection](#full-sequence-fake-detection)
+- [Sliding Window Fake Detection](#sliding-window-fake-detection)
+- [Angular Robustness](#angular-robustness)
+- [3D Model Experiment](#3d-model-experiment)
+
+##### Full Sequence Fake Detection
+To generate the results, make sure you populate your Data file with the normalized landmark matrices. Then run the script `./Experiments/full_sequence_accuracy_experiment.m`.
+
+##### Sliding Window Fake Detection
+To generate the results, make sure you populate your Data file with the normalized landmark matrices. Then pick your method on line 10 and run the script `./Experiments/windowed_accuracy_experiment.m`.  
+
+To re-create the accuracy and ROC plots of Fig. 5, set `accOn = true;` and `rocOn = true;` in `Experiments/make_plots.m`. In the paper, we display results for the DWT baseline and for our method. To re-create the histograms in Fig. 6, set `histogramOn = true;`. In the paper, we display results for our method.     
+ 
+For output created using:
+
+- The simple mouth baseline, use `datasetName = 'simpleMouth';`
+- The DWT baseline, use `datasetName = noPCA;`
+- The PCA method, use `datasetName = onlyPCA;` 
+
+The numbers for Table 1 were generated by looking at the numerical output for the mean accuracy and ROC curve numbers.   
+
+##### Angular Robustness
+This experiment tests whether all sets of cameras separated by the same real-world angular distance are more similar to one another than to a fake video. To run, run ```Experiments/angular_experiment.m```. If you do not want to use Matlab's CPU threading, edit line LINE from `parfor t=1:length(threshes)` to `for t=1:length(threshes)`.   
+
+To visualize your results (re-creating Fig. 7), set `angle = true;`, all other flags to false, and `datasetName = angle;` in `./Experiments/make_plots.m`, then run the script.   
+
+##### 3D Model Experiment
+Script to re-create Fig. 4 is `./Experiments/3d_model_experiment.py`. It expects the parameter data to be structured like in our dataset, where FLAME and 3DMM parameters are stored in npy files. An example of running the code:  
+`python3 3d_model_experiment.py 3 ID5 /path/to/dataset/`  
+where the fake camera is camera three, and we're looking at person five from the dataset.   
+
+### Downloading our Dataset
+Our data will be made accessible very soon!  
+
+To use the post-processed landmark mat files with the experimental scripts right away, move the contents of `Dataset/Processed-Results/` into `./Experiments/Data/`. 
+
+### Licensing
+All original work is under the GNU General Public License v3.0. LipGAN is under the MIT License, and the LIBRA matlab functions are under the academic license specified by LIBRA_LICENSE. 
+
+### Changelog
+- July 15th, 2020: Uploaded the code for running our experiments and processing our data. 
 

@@ -1,0 +1,8 @@
+Mat files go here. Expected naming is: mouth-data-fake<N>-ID<PERSON>.mat,
+where N is the fake camera number (code expects 2,3, or 4), and PERSON 
+is the participant number (code expects 1 thru 25). 
+
+Eg: mouth-data-fake3-ID11.mat
+
+The mat files of processed landmark data will be in the dataset download 
+linked in the github repo.

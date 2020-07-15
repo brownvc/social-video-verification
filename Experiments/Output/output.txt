@@ -1,0 +1,2 @@
+Output from windowed_accuracy_experiment.m will be saved here. The saved
+data is used by make_plots.m to generate plots.  
