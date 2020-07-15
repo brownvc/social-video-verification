@@ -24,7 +24,7 @@ year = {2020}
 } 
 ```
 
-The functions ```cpca```, ```screeplot```, ```mahalanobis```, ```kernelEVD```, ```greatsort```, and ```classSVD``` are from the [LIBRA toolbox](https://github.com/mwgeurts/libra), as described in the following papers:  
+The functions ```cpca```, ```screeplot```, ```mahalanobis```, ```kernelEVD```, ```greatsort```, and ```classSVD``` are from the [LIBRA toolbox](https://github.com/mwgeurts/libra), which we pulled from their repo at commit 2e1c400e953caf3daa3037305cbd5df09b14bde3 in Feb. 2020, as described in the following papers:  
 ```
 @article{verboven2005libra,
   title={LIBRA: a MATLAB library for robust analysis},
@@ -49,7 +49,26 @@ The functions ```cpca```, ```screeplot```, ```mahalanobis```, ```kernelEVD```, `
   publisher={Wiley Online Library}
 }
 ```
-
+LipGAN is described in the following paper:
+```
+@inproceedings{KR:2019:TAF:3343031.3351066,
+  author = {K R, Prajwal and Mukhopadhyay, Rudrabha and Philip, Jerin and Jha, Abhishek and Namboodiri, Vinay and Jawahar, C V},
+  title = {Towards Automatic Face-to-Face Translation},
+  booktitle = {Proceedings of the 27th ACM International Conference on Multimedia}, 
+  series = {MM '19}, 
+  year = {2019},
+  isbn = {978-1-4503-6889-6},
+  location = {Nice, France},
+   = {1428--1436},
+  numpages = {9},
+  url = {http://doi.acm.org/10.1145/3343031.3351066},
+  doi = {10.1145/3343031.3351066},
+  acmid = {3351066},
+  publisher = {ACM},
+  address = {New York, NY, USA},
+  keywords = {cross-language talking face generation, lip synthesis, neural machine translation, speech to speech translation, translation systems, voice transfer},
+}
+```
 ### Running the Code
 #### Data Pre-Processing
 This section will explain how to process your own data with our scripts. If you'd like to use our data, which includes the raw video and the post-processed landmark matrices, please see [Downloading our Dataset](#downloading-our-dataset).  
@@ -57,7 +76,7 @@ This section will explain how to process your own data with our scripts. If you'
 ##### Requirements
 - You will need to download the dlib face detector and put it in `./Data-Processing/` before running the bash script. You can download it [here](http://dlib.net/files/mmod_human_face_detector.dat.bz2). 
 - You will also need to install [FAN](https://github.com/1adrianb/face-alignment), by running `pip install face-alignment`. 
-- You will need to install the requirements for [LipGAN](https://github.com/Rudrabha/LipGAN). Since it is under an MIT License, I have included the code in this repo, minus their models, which you will need to download yourself and place in `./LipGAN/logs/`. I made modifications to their `batch_inference.py` script so that it would use our pre-computed bounding boxes, and to add a little blending to the final result to make it look a bit nicer.     
+- You will need to install the requirements for [LipGAN](https://github.com/Rudrabha/LipGAN). Since it is under an MIT License, I have included the code in this repo, minus their models, which you will need to download yourself and place in `./LipGAN/logs/`. I made modifications to their `batch_inference.py` script so that it would use our pre-computed bounding boxes, and to add a little blending to the final result to make it look a bit nicer. We use the LipGAN repo's commit 03b540c68aa5ab871baa4e64f6ade6736131b1b9, which we pulled Feb 11th, 2020.     
 
 ##### Using your own computed landmarks
 If you are using your own data, the format the experiment code expects is a struct with entries `cam1`,`cam2`,`cam3`,`cam4`,`cam5`,`cam6`, and `fake`, where the fake is a manipulated version of one of the real cameras. Each field contains an `f x 40` matrix, where there are `f` frames, and each row contains mouth landmarks `[x_1, y_1, x_2, y_2, ..., x_20,  y_20]` (though you may use any subset of landmarks you like--- the 20 mouth landmarks are what we used for all our experiments). Each `f x 40` matrix should be normalized by subtracting the mean and dividing by the standard deviation. We generate our .mat files using `./Data-Processing/landmark-npy-to-mat.py`. Here is an example of how to run that script to generate one of the mat files:  
