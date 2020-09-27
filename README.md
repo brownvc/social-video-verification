@@ -9,7 +9,7 @@ Media Forensics CVPR Workshop 2020
 
 <img src="./main-fig.svg" width="70%">
 
-### [Paper + Presentation](http://visual.cs.brown.edu/socialvideoverification)
+### [Paper + Presentation](http://visual.cs.brown.edu/socialvideoverification/)
 
 ## Citation
 If you find our work useful for your research, please cite:  
@@ -138,7 +138,7 @@ To reproduce our results, please use the [post-processed landmark .mat files](ht
 All original work is under the GNU General Public License v3.0. LipGAN is under the MIT License, and the LIBRA MATLAB functions are under the academic license specified by LIBRA_LICENSE.
 
 ### Changelog
-- 2020 August 26th: Moved document downloads to [separate webpage](http://visual.cs.brown.edu/socialvideoverification). Added errata from paper, thank to [Harman Suri](https://www.linkedin.com/in/harman-suri-487bab127/).
+- 2020 August 26th: Moved document downloads to [separate webpage](http://visual.cs.brown.edu/socialvideoverification/). Added errata from paper, thank to [Harman Suri](https://www.linkedin.com/in/harman-suri-487bab127/).
 - 2020 August 26th: Added dataset URL.
 - 2020 July 15th: Uploaded the code for running our experiments and processing our data. 
 
