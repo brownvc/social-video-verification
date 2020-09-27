@@ -9,7 +9,7 @@ Media Forensics CVPR Workshop 2020
 
 <img src="./main-fig.svg" width="70%">
 
-### [Paper](https://tursmanor.github.io/social-video-verification.pdf) | [Supplemental](https://tursmanor.github.io/social-video-verification-supp.pdf) | [Presentation Video](https://www.youtube.com/watch?v=b6gPMMjfRWA)
+### [Paper + Presentation](http://visual.cs.brown.edu/socialvideoverification)
 
 ## Citation
 If you find our work useful for your research, please cite:  
@@ -130,13 +130,15 @@ Script to re-create Fig. 4 is `./Experiments/3d_model_experiment.py`. It expects
 where the fake camera is camera three, and we're looking at person five from the dataset.   
 
 ### Downloading our Dataset
-Our data will be made accessible very soon!  
+Our video data and post-processed landmarks are available [via the Brown library](https://repository.library.brown.edu/studio/collections/id_1006/).  
 
-To use the post-processed landmark mat files with the experimental scripts right away, move the contents of `Dataset/Processed-Results/` into `./Experiments/Data/`. 
+To reproduce our results, please use the [post-processed landmark .mat files](https://repository.library.brown.edu/studio/item/bdr:1144738/) with the experimental scripts on Github. Once the .zip is downloaded, extract the contents of `Dataset/Processed-Results/` into `./Experiments/Data/` from the codebase root directory.
 
 ### Licensing
-All original work is under the GNU General Public License v3.0. LipGAN is under the MIT License, and the LIBRA matlab functions are under the academic license specified by LIBRA_LICENSE. 
+All original work is under the GNU General Public License v3.0. LipGAN is under the MIT License, and the LIBRA MATLAB functions are under the academic license specified by LIBRA_LICENSE.
 
 ### Changelog
-- July 15th, 2020: Uploaded the code for running our experiments and processing our data. 
+- 2020 August 26th: Moved document downloads to [separate webpage](http://visual.cs.brown.edu/socialvideoverification). Added errata from paper, thank to [Harman Suri](https://www.linkedin.com/in/harman-suri-487bab127/).
+- 2020 August 26th: Added dataset URL.
+- 2020 July 15th: Uploaded the code for running our experiments and processing our data. 
 
